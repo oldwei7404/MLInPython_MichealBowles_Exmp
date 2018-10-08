@@ -1,14 +1,15 @@
-import urllib2
+import urllib.request
 import numpy
 from sklearn.cross_validation import train_test_split
 from sklearn import ensemble
 from sklearn.metrics import mean_squared_error
 import pylab as plot
+import time
 
 
 # Read wine quality data from UCI website
 target_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 xList = []
 labels = []
@@ -16,11 +17,11 @@ names = []
 firstLine = True
 for line in data:
     if firstLine:
-        names = line.strip().split(";")
+        names = line.decode().strip().split(";")
         firstLine = False
     else:
         #split on semi-colon
-        row = line.strip().split(";")
+        row = line.decode().strip().split(";")
         #put labels in separate array
         labels.append(float(row[-1]))
         #remove label from row
@@ -32,7 +33,8 @@ for line in data:
 nrows = len(xList)
 ncols = len(xList[0])
 
-X = numpy.array(xList)
+## change from list to numpy array
+X = numpy.array(xList)  
 y = numpy.array(labels)
 wineNames = numpy.array(names)
 
@@ -41,8 +43,9 @@ xTrain, xTest, yTrain, yTest = train_test_split(X, y, test_size=0.30, random_sta
 
 #train random forest at a range of ensemble sizes in order to see how the mse changes
 mseOos = []
-nTreeList = range(50, 500, 10)
+nTreeList = range( 50, 500, 10)
 for iTrees in nTreeList:
+    tStart = time.time()
     depth = None
     maxFeat  = 4 #try tweaking
     wineRFModel = ensemble.RandomForestRegressor(n_estimators=iTrees, max_depth=depth, max_features=maxFeat,
@@ -54,9 +57,14 @@ for iTrees in nTreeList:
     prediction = wineRFModel.predict(xTest)
     mseOos.append(mean_squared_error(yTest, prediction))
 
+    tEnd = time.time()
+    tRun = round(tEnd - tStart, 2)
+    print("iTrees = ", iTrees," done, runtime = ", tRun, "secs")
+    
 
 print("MSE" )
-print(mseOos[-1])
+#print(mseOos[-1])
+print (mseOos)
 
 
 #plot training and test errors vs number of trees in ensemble

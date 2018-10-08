@@ -7,7 +7,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.externals.six import StringIO
 
 #Build a simple data set with y = x + random
-nPoints = 100
+nPoints = 1000
 
 #x values for plotting
 xPlot = [(float(i)/float(nPoints) - 0.5) for i in range(nPoints + 1)]

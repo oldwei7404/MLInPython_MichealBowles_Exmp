@@ -40,7 +40,7 @@ yTest = [y[r] for r in idxTest]
 numTreesMax = 30
 
 #tree depth - typically at the high end
-treeDepth = 5
+treeDepth = 1
 
 #initialize a list to hold models
 modelList = []
@@ -53,7 +53,7 @@ residuals = list(yTrain)
 for iTrees in range(numTreesMax):
 
     modelList.append(DecisionTreeRegressor(max_depth=treeDepth))
-    modelList[-1].fit(xTrain, residuals)
+    modelList[-1].fit(xTrain, residuals)  # label here is residual
 
     #make prediction with latest model and add to list of predictions
     latestInSamplePrediction = modelList[-1].predict(xTrain)

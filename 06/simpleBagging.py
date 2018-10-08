@@ -53,7 +53,7 @@ nBagSamples = int(len(xTrain) * 0.5)
 for iTrees in range(numTreesMax):
     idxBag = []
     for i in range(nBagSamples):
-        idxBag.append(random.choice(range(len(xTrain))))
+        idxBag.append(random.choice(range(len(xTrain))))  # same row could be picked multiple times
     xTrainBag = [xTrain[i] for i in idxBag]
     yTrainBag = [yTrain[i] for i in idxBag]
 

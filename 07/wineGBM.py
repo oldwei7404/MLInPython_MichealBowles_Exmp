@@ -1,4 +1,4 @@
-import urllib2
+import urllib.request
 import numpy
 from sklearn.cross_validation import train_test_split
 from sklearn import ensemble
@@ -7,7 +7,7 @@ import pylab as plot
 
 # Read wine quality data from UCI website
 target_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 xList = []
 labels = []
@@ -15,11 +15,11 @@ names = []
 firstLine = True
 for line in data:
     if firstLine:
-        names = line.strip().split(";")
+        names = line.decode().strip().split(";")
         firstLine = False
     else:
         #split on semi-colon
-        row = line.strip().split(";")
+        row = line.decode().strip().split(";")
         #put labels in separate array
         labels.append(float(row[-1]))
         #remove label from row
