@@ -1,6 +1,6 @@
 __author__ = 'mike_bowles'
 
-import urllib2
+import urllib.request
 from math import sqrt, fabs, exp
 import matplotlib.pyplot as plot
 from sklearn.linear_model import enet_path
@@ -11,13 +11,13 @@ import numpy
 
 
 target_url = "https://archive.ics.uci.edu/ml/machine-learning-databases/glass/glass.data"
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 #arrange data into list for labels and list of lists for attributes
 xList = []
 for line in data:
     #split on comma
-    row = line.strip().split(",")
+    row = line.decode().strip().split(",")
     xList.append(row)
 
 glassNames = numpy.array(['RI', 'Na', 'Mg', 'Al', 'Si', 'K', 'Ca', 'Ba', 'Fe', 'Type'])

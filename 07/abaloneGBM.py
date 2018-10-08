@@ -1,6 +1,6 @@
 __author__ = 'mike_bowles'
 
-import urllib2
+import urllib.request
 from pylab import *
 import matplotlib.pyplot as plot
 import numpy
@@ -10,13 +10,13 @@ from sklearn.metrics import mean_squared_error
 
 target_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data"
 #read abalone data
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 xList = []
 labels = []
 for line in data:
     #split on semi-colon
-    row = line.strip().split(",")
+    row = line.decode().strip().split(",")
 
     #put labels in separate array and remove label from row
     labels.append(float(row.pop()))

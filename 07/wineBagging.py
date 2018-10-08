@@ -1,6 +1,6 @@
 __author__ = 'mike-bowles'
 
-import urllib2
+import urllib.request
 import numpy
 import matplotlib.pyplot as plot
 from sklearn import tree
@@ -11,7 +11,7 @@ import random
 
 # Read wine quality data from UCI website
 target_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv"
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 xList = []
 labels = []
@@ -19,11 +19,11 @@ names = []
 firstLine = True
 for line in data:
     if firstLine:
-        names = line.strip().split(";")
+        names = line.decode().strip().split(";")
         firstLine = False
     else:
         #split on semi-colon
-        row = line.strip().split(";")
+        row = line.decode().strip().split(";")
         #put labels in separate array
         labels.append(float(row[-1]))
         #remove label from row
@@ -85,7 +85,7 @@ mse = []
 allPredictions = []
 for iModels in range(len(modelList)):
 
-    #average first "iModels" of the predictions
+    #average first "iModels" of the predictions for each Test example
     prediction = []
     for iPred in range(len(xTest)):
         prediction.append(sum([predList[i][iPred] for i in range(iModels + 1)])/(iModels + 1))

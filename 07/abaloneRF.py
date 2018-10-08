@@ -1,6 +1,6 @@
 __author__ = 'mike_bowles'
 
-import urllib2
+import urllib.request
 from pylab import *
 import matplotlib.pyplot as plot
 import numpy
@@ -11,13 +11,13 @@ from sklearn.metrics import mean_squared_error
 
 target_url = "http://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data"
 #read abalone data
-data = urllib2.urlopen(target_url)
+data = urllib.request.urlopen(target_url)
 
 xList = []
 labels = []
 for line in data:
     #split on semi-colon
-    row = line.strip().split(",")
+    row = line.decode().strip().split(",")
 
     #put labels in separate array and remove label from row
     labels.append(float(row.pop()))
@@ -33,7 +33,7 @@ for row in xList:
     if row[0] == 'M': codedSex[0] = 1.0
     if row[0] == 'F': codedSex[1] = 1.0
 
-    numRow = [float(row[i]) for i in range(1,len(row))]
+    numRow = [float(row[i]) for i in range(1,len(row))]  # new row info start from col 1, to skip row[0]
     rowCoded = list(codedSex) + numRow
     xCoded.append(rowCoded)
 
