@@ -4,7 +4,8 @@ import urllib.request
 from pylab import *
 import matplotlib.pyplot as plot
 import numpy
-from sklearn.cross_validation import train_test_split
+#from sklearn.cross_validation import train_test_split
+from sklearn.model_selection import train_test_split
 from sklearn import ensemble
 from sklearn.metrics import mean_squared_error
 
@@ -66,7 +67,8 @@ abaloneGBMModel.fit(xTrain, yTrain)
 
 # compute mse on test set
 msError = []
-predictions = abaloneGBMModel.staged_decision_function(xTest)
+#predictions = abaloneGBMModel.staged_decision_function(xTest)
+predictions = abaloneGBMModel.staged_predict(xTest)
 for p in predictions:
     msError.append(mean_squared_error(yTest, p))
 
